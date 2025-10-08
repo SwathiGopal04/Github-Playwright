@@ -1,0 +1,28 @@
+
+import{test, chromium } from '@playwright/test'
+
+
+
+test(`Test to launch the browser using pesistent context`,async()=>{
+
+
+const userDataDir = "./myUserDataDir"
+
+
+const context= await chromium.launchPersistentContext(userDataDir,{
+headless:false,
+permissions:['notifications'],
+httpCredentials:{
+username: "admin",
+password: "testleaf" 
+}
+}) // context compare with google profile that saves your user preferences
+
+
+const page= await context.newPage() //tab opened in the window
+await page.goto("https://leafground.com/auth.xhtml");
+await page.getByRole("button",{name:"Basic Auth"}).click()
+await page.waitForTimeout(3000)
+
+
+} )
